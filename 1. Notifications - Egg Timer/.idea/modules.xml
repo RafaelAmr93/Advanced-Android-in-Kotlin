@@ -2,11 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/android-kotlin-notifications-master.iml" filepath="$PROJECT_DIR$/.idea/modules/android-kotlin-notifications-master.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/android-kotlin-notifications-master.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/android-kotlin-notifications-master.app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/android-kotlin-notifications-master.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/android-kotlin-notifications-master.app.androidTest.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/android-kotlin-notifications-master.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/android-kotlin-notifications-master.app.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/android-kotlin-notifications-master.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/android-kotlin-notifications-master.app.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1._Notifications_-_Egg_Timer.iml" filepath="$PROJECT_DIR$/.idea/modules/1._Notifications_-_Egg_Timer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/1._Notifications_-_Egg_Timer.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/1._Notifications_-_Egg_Timer.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/1._Notifications_-_Egg_Timer.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/1._Notifications_-_Egg_Timer.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/1._Notifications_-_Egg_Timer.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/1._Notifications_-_Egg_Timer.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/1._Notifications_-_Egg_Timer.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/1._Notifications_-_Egg_Timer.app.unitTest.iml" />
     </modules>
   </component>
 </project>

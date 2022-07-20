@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/customViewLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/regular_margin"
+        android:layout_marginTop="@dimen/top_margin"
+        android:layout_marginEnd="@dimen/regular_margin"
+        android:padding="@dimen/padding"
+        android:text="@string/fan_control"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Display3"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/font_size"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.example.customfancontroller.DialView
+        android:id="@+id/dialView"
+        android:layout_width="@dimen/img_width"
+        android:layout_height="@dimen/imd_height"
+        android:layout_marginLeft="@dimen/regular_margin"
+        android:layout_marginTop="@dimen/regular_margin"
+        android:layout_marginRight="@dimen/regular_margin"
+        android:contentDescription="@string/image_view_desc"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/customViewLabel"
+        app:fanColorOff="#90a4ae"
+        app:fanColor1="#80e27e"
+        app:fanColor2="#00796b"
+        app:fanColor3="#004d40"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

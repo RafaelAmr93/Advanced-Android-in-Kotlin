@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">CustomFanController</string>
+    <string name="fan_control">Fan Control</string>
+    <string name="image_view_desc">Image view to be used</string>
+    <string name="fan_off">OFF</string>
+    <string name="fan_low">1</string>
+    <string name="fan_medium">2</string>
+    <string name="fan_high">3</string>
+</resources>
