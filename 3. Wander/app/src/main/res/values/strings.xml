@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">Wander</string>
     <string name="title_activity_maps">MapsActivity</string>
-    <string name="google_maps_api_key">AIzaSyA9VABSOBQtpR9uZo4J4W4JWBshSBTMGYE</string>
     <string name="normal_map">Normal Map</string>
     <string name="hybrid_map">Hybrid Map</string>
     <string name="satellite_map">Sattelite Map</string>
