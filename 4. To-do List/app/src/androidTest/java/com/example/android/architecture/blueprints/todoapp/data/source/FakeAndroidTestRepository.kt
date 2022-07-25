@@ -1,6 +1,6 @@
-package com.example.android.architecture.blueprints.todoapp.data.source.remote
+package com.example.android.architecture.blueprints.todoapp.data.source
 
-import android.annotation.SuppressLint
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
@@ -8,26 +8,22 @@ import com.example.android.architecture.blueprints.todoapp.data.Result
 import com.example.android.architecture.blueprints.todoapp.data.Result.Error
 import com.example.android.architecture.blueprints.todoapp.data.Result.Success
 import com.example.android.architecture.blueprints.todoapp.data.Task
-import com.example.android.architecture.blueprints.todoapp.data.source.TasksDataSource
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
+import java.util.LinkedHashMap
 
-/**
- * Implementation of the data source that adds a latency simulating network.
- */
-object TasksRemoteDataSource : TasksDataSource {
 
-    private const val SERVICE_LATENCY_IN_MILLIS = 2000L
+class FakeAndroidTestRepository : TasksRepository {
 
-    private var TASKS_SERVICE_DATA = LinkedHashMap<String, Task>(2)
+    var tasksServiceData: LinkedHashMap<String, Task> = LinkedHashMap()
 
-    init {
-        addTask("Build tower in Pisa", "Ground looks good, no foundation work required.")
-        addTask("Finish bridge in Tacoma", "Found awesome girders at half the cost!")
-    }
+    private var shouldReturnError = false
 
     private val observableTasks = MutableLiveData<Result<List<Task>>>()
 
-    @SuppressLint("NullSafeMutableLiveData")
+    fun setReturnError(value: Boolean) {
+        shouldReturnError = value
+    }
+
     override suspend fun refreshTasks() {
         observableTasks.value = getTasks()
     }
@@ -37,10 +33,12 @@ object TasksRemoteDataSource : TasksDataSource {
     }
 
     override fun observeTasks(): LiveData<Result<List<Task>>> {
+        runBlocking { refreshTasks() }
         return observableTasks
     }
 
     override fun observeTask(taskId: String): LiveData<Result<Task>> {
+        runBlocking { refreshTasks() }
         return observableTasks.map { tasks ->
             when (tasks) {
                 is Result.Loading -> Result.Loading
@@ -54,60 +52,68 @@ object TasksRemoteDataSource : TasksDataSource {
         }
     }
 
-    override suspend fun getTasks(): Result<List<Task>> {
-        // Simulate network by delaying the execution.
-        val tasks = TASKS_SERVICE_DATA.values.toList()
-        delay(SERVICE_LATENCY_IN_MILLIS)
-        return Success(tasks)
-    }
-
-    override suspend fun getTask(taskId: String): Result<Task> {
-        // Simulate network by delaying the execution.
-        delay(SERVICE_LATENCY_IN_MILLIS)
-        TASKS_SERVICE_DATA[taskId]?.let {
+    override suspend fun getTask(taskId: String, forceUpdate: Boolean): Result<Task> {
+        if (shouldReturnError) {
+            return Result.Loading
+        }
+        tasksServiceData[taskId]?.let {
             return Success(it)
         }
         return Result.Loading
     }
 
-    private fun addTask(title: String, description: String) {
-        val newTask = Task(title, description)
-        TASKS_SERVICE_DATA[newTask.id] = newTask
+    override suspend fun getTasks(forceUpdate: Boolean): Result<List<Task>> {
+        if (shouldReturnError) {
+            return Result.Loading
+        }
+        return Success(tasksServiceData.values.toList())
     }
 
     override suspend fun saveTask(task: Task) {
-        TASKS_SERVICE_DATA[task.id] = task
+        tasksServiceData[task.id] = task
     }
 
     override suspend fun completeTask(task: Task) {
         val completedTask = Task(task.title, task.description, true, task.id)
-        TASKS_SERVICE_DATA[task.id] = completedTask
+        tasksServiceData[task.id] = completedTask
     }
 
     override suspend fun completeTask(taskId: String) {
-        // Not required for the remote data source
+        // Not required for the remote data source.
+        throw NotImplementedError()
     }
 
     override suspend fun activateTask(task: Task) {
         val activeTask = Task(task.title, task.description, false, task.id)
-        TASKS_SERVICE_DATA[task.id] = activeTask
+        tasksServiceData[task.id] = activeTask
     }
 
     override suspend fun activateTask(taskId: String) {
-        // Not required for the remote data source
+        throw NotImplementedError()
     }
 
     override suspend fun clearCompletedTasks() {
-        TASKS_SERVICE_DATA = TASKS_SERVICE_DATA.filterValues {
+        tasksServiceData = tasksServiceData.filterValues {
             !it.isCompleted
         } as LinkedHashMap<String, Task>
     }
 
-    override suspend fun deleteAllTasks() {
-        TASKS_SERVICE_DATA.clear()
+    override suspend fun deleteTask(taskId: String) {
+        tasksServiceData.remove(taskId)
+        refreshTasks()
     }
 
-    override suspend fun deleteTask(taskId: String) {
-        TASKS_SERVICE_DATA.remove(taskId)
+    override suspend fun deleteAllTasks() {
+        tasksServiceData.clear()
+        refreshTasks()
+    }
+
+
+    fun addTasks(vararg tasks: Task) {
+        for (task in tasks) {
+            tasksServiceData[task.id] = task
+        }
+        runBlocking { refreshTasks() }
     }
 }
+
